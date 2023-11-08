@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 
 {% block body %}
     <h1>{{ article.title }}</h1>
@@ -15,7 +16,7 @@
     {% if user.is_authenticated %}
     <form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">
         {% csrf_token %}
-        {{ form }}
+        {% bootstrap_form form %}
         <input type="submit">
     </form>
     <hr>
