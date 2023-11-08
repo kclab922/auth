@@ -5,6 +5,10 @@
     <p>{{ article.content }}</p>
     <p>{{ article.user }}</p>
 
+    {% if user == article.user %}
+    <a href="{% url 'articles:delete' id=article.id %}">delete</a>
+    {% endif %}
+
     <hr>
 
     {% if user.is_authenticated %}

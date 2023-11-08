@@ -48,6 +48,17 @@ def detail(request, id):
 
 
 @login_required
+def delete(request, id):
+    article = Article.objects.get(id=id)
+
+    if request.user == article.user: 
+        article.delete()
+
+    return redirect('articles:index')
+
+
+
+@login_required
 def comment_create(request, article_id):
     form = CommentForm(request.POST)
     # article = Article.objects.get(id=article_id)
