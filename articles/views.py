@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import ArticleForm, CommentForm
-from .models import Article
+from .models import Article, Comment
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -64,3 +64,16 @@ def comment_create(request, article_id):
         comment.save()
 
         return redirect('articles:detail', id=article_id)
+
+
+@login_required
+def comment_delete(request, article_id, id):
+    
+    # 삭제할 댓글을 찾기
+    comment = Comment.objects.get(id=id)
+
+    # 로그인 계정과 댓글작성자 정보가 일치하면 삭제
+    if request.user == comment.user:
+        comment.delete()
+
+    return redirect('articles:detail', id=article_id)
